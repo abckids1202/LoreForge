@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyc
+*.sqlite3
+*.db
+*.tsbuildinfo
+.env
+backend/.env
+frontend/.env
+uploads/

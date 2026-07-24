@@ -1,0 +1,15 @@
+{
+  "name": "loreforge",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Full-stack worldbuilding and lore management platform.",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm --workspace frontend run dev",
+    "build": "npm --workspace frontend run build",
+    "preview": "npm --workspace frontend run preview",
+    "test": "npm --workspace frontend run typecheck"
+  }
+}
