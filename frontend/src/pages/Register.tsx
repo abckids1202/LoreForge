@@ -9,6 +9,7 @@ export default function Register() {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -16,9 +17,15 @@ export default function Register() {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
     try {
-      await api.register({ email, password, display_name: displayName });
-      const result = await api.login({ email, password });
+      const cleanEmail = email.trim();
+      await api.register({ email: cleanEmail, password, display_name: displayName.trim() });
+      const result = await api.login({ email: cleanEmail, password });
       setToken(result.access_token);
       navigate("/", { replace: true });
     } catch (err) {
@@ -46,7 +53,18 @@ export default function Register() {
       </label>
       <label>
         Password
-        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={8} />
+        <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={8} autoComplete="new-password" />
+      </label>
+      <label>
+        Re-enter password
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          required
+          minLength={8}
+          autoComplete="new-password"
+        />
       </label>
       <button className="primary-button" disabled={loading}>
         {loading ? "Creating..." : "Create account"}

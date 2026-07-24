@@ -48,3 +48,10 @@ def test_world_dashboard_requires_owner(client: TestClient) -> None:
 def test_validation_rejects_short_password(client: TestClient) -> None:
     response = client.post("/api/v1/auth/register", json={"email": "bad@example.com", "password": "short", "display_name": "Bad"})
     assert response.status_code == 422
+
+
+def test_login_accepts_trimmed_email(client: TestClient) -> None:
+    token = register_and_login(client, "trimmed@example.com")
+    assert token
+    login = client.post("/api/v1/auth/login", json={"email": "  trimmed@example.com  ", "password": "StrongPass123!"})
+    assert login.status_code == 200

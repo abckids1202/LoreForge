@@ -16,7 +16,7 @@ export default function Login() {
     setLoading(true);
     setError(null);
     try {
-      const result = await api.login({ email, password });
+      const result = await api.login({ email: email.trim(), password });
       setToken(result.access_token);
       navigate("/", { replace: true });
     } catch (err) {
